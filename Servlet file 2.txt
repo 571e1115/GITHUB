@@ -1,0 +1,66 @@
+package pc1;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class Hackathon1
+ */
+@WebServlet("/Hackathon1")
+public class Hackathon1 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Hackathon1() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		PrintWriter out = response.getWriter();
+		
+		out.println("<style >");
+		out.println("section{ background-color:green;}h1{font: Arial black;color : white;}");
+		out.println("</style>");
+		out.println("<body>");
+		out.println("<section>");
+		out.println("<br><br>");
+		
+		out.println("<h1 ><b><center>Welcome</center></b></h1>");
+		out.println("<br><br>");
+		out.println("</section>");
+		out.println("</body><br><br><br><br>");
+		HttpSession s = request.getSession();
+		
+		String name = (String)s.getAttribute("Name");
+	
+		out.println("<center>");
+		out.print("Welcome " + name);
+		out.print("<br><br>");
+	    out.print(" <a href=Hackathon2>Join more people like you</a> ");
+		out.println("<center>");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

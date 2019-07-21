@@ -1,0 +1,83 @@
+package pc1;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ * Servlet implementation class Hackathon
+ */
+@WebServlet("/Hackathon")
+public class Hackathon extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Hackathon() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String name=request.getParameter("name");
+		String city=request.getParameter("city");
+		String openness=request.getParameter("openness");
+		String extraversion=request.getParameter("extraversion");
+		String neuroticism=request.getParameter("neuroticism");
+		String conscientiousness  =request.getParameter("conscientiousness");
+		String agreeableness=request.getParameter("agreeableness");
+		
+		
+		try
+		{
+			  Class.forName("com.mysql.cj.jdbc.Driver");
+	          Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/abc","root","devjyoti");  
+	          PreparedStatement ps=con.prepareStatement("insert into hackathon(Name,City,Openness,extraversion,emotional,Organized,agreeableness) values(?,?,?,?,?,?,?)");
+	          ps.setString(1, name);
+	          ps.setString(2,city );
+	          ps.setString(3,openness);
+	          ps.setString(4,extraversion);
+	          ps.setString(5,neuroticism );
+	          ps.setString(6,conscientiousness);
+	          ps.setString(7,agreeableness);
+	          
+	          ps.executeUpdate();
+	          
+	         
+		}
+		catch(Exception e)	
+		{
+			e.printStackTrace();
+			
+		}
+		 HttpSession s = request.getSession();
+     	 s.setAttribute("Name", name);
+         
+         response.sendRedirect("Hackathon1");
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

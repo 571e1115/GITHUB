@@ -1,0 +1,93 @@
+package pc1;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Hackathon2
+ */
+@WebServlet("/Hackathon2")
+public class Hackathon2 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Hackathon2() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+	      PrintWriter out = response.getWriter();
+	      out.println("<style >");
+			out.println("section{ background-color:brown;}h1{font: Arial black;color : white;}");
+			out.println("</style>");
+			out.println("<body>");
+			out.println("<section>");
+			out.println("<br><br>");
+			
+			out.println("<h1 ><b><center>Meet New people</center></b></h1>");
+			out.println("<br><br>");
+			out.println("</section>");
+			out.println("</body><br><br><br><br>");
+			
+		 
+	    try
+	    {
+	    	
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/abc","root","devjyoti");
+	    
+			
+			PreparedStatement ps=con.prepareStatement("select name from hackathon where Openness='Yes'AND extraversion='Yes' AND agreeableness='Yes' AND Organized='Yes' ");
+	    	
+	    	ResultSet rs=ps.executeQuery();
+	    	out.println("<center>");
+	    	out.println("People like you -");
+	    	out.println("<br><br>");
+	    	out.println("<center>");
+	    	
+	    	while(rs.next())
+	    	{
+	    		String name = rs.getString("name");
+	    		out.print(name);
+	    		out.println(" <br>");
+		          
+	    	}
+	    	
+	    }
+	    catch(Exception e)
+	    {
+	    	e.printStackTrace();	    		
+	    }  
+	    
+		out.println("<br><br>");	
+	    out.print(" <a href=Hackathon3>Click to know more</a> ");
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}
